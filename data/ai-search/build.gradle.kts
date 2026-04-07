@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -17,8 +18,8 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -33,7 +34,7 @@ android {
             jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
-    namespace = "de.mm20.launcher2.search"
+    namespace = "de.mm20.launcher2.aisearch"
 }
 
 dependencies {
@@ -45,18 +46,8 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(libs.jsoup)
-    implementation(libs.coil.core)
-
-    implementation(project(":data:calculator"))
-    implementation(project(":data:ai-search"))
-    implementation(project(":data:unitconverter"))
-    implementation(project(":data:customattrs"))
-    implementation(project(":data:search-actions"))
-
     implementation(project(":core:base"))
     implementation(project(":core:preferences"))
-    implementation(project(":core:profiles"))
-    implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
+    implementation(project(":services:ai"))
 }

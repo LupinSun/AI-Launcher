@@ -23,6 +23,8 @@ import de.mm20.launcher2.unitconverter.unitConverterModule
 import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
+import de.mm20.launcher2.ai.aiModule
+import de.mm20.launcher2.aisearch.aiSearchModule
 import de.mm20.launcher2.database.databaseModule
 import de.mm20.launcher2.debug.initDebugMode
 import de.mm20.launcher2.globalactions.globalActionsModule
@@ -90,6 +92,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     websitesModule,
                     widgetsModule,
                     wikipediaModule,
+                    aiModule,
+                    aiSearchModule,
                     locationsModule,
                     servicesTagsModule,
                     widgetsServiceModule,

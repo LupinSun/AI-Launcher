@@ -34,6 +34,7 @@ import de.mm20.launcher2.search.SearchResults
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Website
+import de.mm20.launcher2.aisearch.AiSearchResult
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.search.isUnspecified
@@ -119,6 +120,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
+    val aiResults = mutableStateListOf<AiSearchResult>()
 
     var previousResults: SearchResults? = null
 
@@ -320,6 +322,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         )
                         calculatorResults.updateItems(results.calculators)
                         unitConverterResults.updateItems(results.unitConverters)
+                        aiResults.updateItems(results.aiResults)
 
                         if (results.searchActions != null) {
                             searchActionResults.updateItems(results.searchActions!!)

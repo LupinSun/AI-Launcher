@@ -1,6 +1,7 @@
 package de.mm20.launcher2.search
 
 import android.util.Log
+import de.mm20.launcher2.aisearch.AiSearchResult
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
@@ -50,6 +51,7 @@ internal class SearchServiceImpl(
     private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
     private val profileManager: ProfileManager,
+    private val aiSearchRepository: SearchableRepository<AiSearchResult>,
 ) : SearchService {
 
     override fun search(
@@ -71,6 +73,7 @@ internal class SearchServiceImpl(
                         websites = if (filters.websites) it.websites else null,
                         wikipedia = if (filters.articles) it.wikipedia else null,
                         locations = if (filters.places) it.locations else null,
+                        aiResults = if (filters.aiSearch) it.aiResults else null,
                     )
                 }
                     ?: SearchResults())
@@ -267,6 +270,17 @@ internal class SearchServiceImpl(
                         }
                 }
             }
+            if (filters.aiSearch) {
+                launch {
+                    delay(300)
+                    aiSearchRepository.search(query, filters.allowNetwork)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(aiResults = r)
+                            }
+                        }
+                }
+            }
             emitAll(results)
         }
     }
@@ -327,6 +341,7 @@ data class SearchResults(
     val wikipedia: List<Article>? = null,
     val locations: List<Location>? = null,
     val searchActions: List<SearchAction>? = null,
+    val aiResults: List<AiSearchResult>? = null,
 )
 
 data class AllAppsResults(

@@ -53,6 +53,7 @@ import de.mm20.launcher2.ui.launcher.search.location.LocationResults
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
+import de.mm20.launcher2.ui.launcher.search.ai.AiSearchResultSection
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -97,6 +98,7 @@ fun SearchColumn(
     val wikipedia = viewModel.articleResults
     val locations = viewModel.locationResults
     val website = viewModel.websiteResults
+    val aiAnswers = viewModel.aiResults
     val hiddenResults = viewModel.hiddenResults
 
     val bestMatch by viewModel.bestMatch
@@ -318,6 +320,10 @@ fun SearchColumn(
                         onShowAll = {
                             viewModel.expandCategory(SearchCategory.Location)
                         }
+                    )
+                    AiSearchResultSection(
+                        results = aiAnswers,
+                        reverse = reverse,
                     )
                     ArticleResults(
                         articles = wikipedia,

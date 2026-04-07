@@ -151,6 +151,8 @@ dependencies {
     implementation(project(":data:websites"))
     implementation(project(":data:widgets"))
     implementation(project(":data:wikipedia"))
+    implementation(project(":services:ai"))
+    implementation(project(":data:ai-search"))
     implementation(project(":data:database"))
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))

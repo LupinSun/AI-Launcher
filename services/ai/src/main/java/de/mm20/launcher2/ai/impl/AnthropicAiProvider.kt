@@ -3,6 +3,7 @@ package de.mm20.launcher2.ai.impl
 import de.mm20.launcher2.ai.AiKeyStore
 import de.mm20.launcher2.ai.AiMessage
 import de.mm20.launcher2.ai.AiProvider
+import de.mm20.launcher2.ai.apiName
 import de.mm20.launcher2.preferences.AiProviderType
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -30,15 +31,15 @@ class AnthropicAiProvider(
             put("max_tokens", 1024)
             put("stream", true)
             putJsonArray("messages") {
-                messages.filter { it.role != AiMessage.Role.system }.forEach { msg ->
+                messages.filter { it.role != AiMessage.Role.System }.forEach { msg ->
                     addJsonObject {
-                        put("role", msg.role.name)
+                        put("role", msg.role.apiName)
                         put("content", msg.content)
                     }
                 }
             }
             // System message as top-level field
-            messages.firstOrNull { it.role == AiMessage.Role.system }?.let {
+            messages.firstOrNull { it.role == AiMessage.Role.System }?.let {
                 put("system", it.content)
             }
         }
@@ -48,6 +49,11 @@ class AnthropicAiProvider(
             header("anthropic-version", "2023-06-01")
             contentType(ContentType.Application.Json)
             setBody(requestBody.toString())
+        }
+
+        if (!response.status.isSuccess()) {
+            val errorBody = response.bodyAsText()
+            throw Exception("AI API error ${response.status.value}: $errorBody")
         }
 
         val channel: ByteReadChannel = response.bodyAsChannel()
@@ -72,8 +78,8 @@ class AnthropicAiProvider(
     override suspend fun classify(text: String, labels: List<String>): String? {
         val result = StringBuilder()
         chat(listOf(
-            AiMessage(AiMessage.Role.system, "Classify the input into exactly one of: ${labels.joinToString(", ")}. Respond with only the label."),
-            AiMessage(AiMessage.Role.user, text),
+            AiMessage(AiMessage.Role.System, "Classify the input into exactly one of: ${labels.joinToString(", ")}. Respond with only the label."),
+            AiMessage(AiMessage.Role.User, text),
         )).collect { result.append(it) }
         return labels.firstOrNull { result.toString().trim().equals(it, ignoreCase = true) }
     }
