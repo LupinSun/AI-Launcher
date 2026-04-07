@@ -154,6 +154,7 @@ dependencies {
     implementation(project(":services:ai"))
     implementation(project(":data:ai-search"))
     implementation(project(":services:ai-assistant"))
+    implementation(project(":services:ai-suggestions"))
     implementation(project(":data:database"))
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))

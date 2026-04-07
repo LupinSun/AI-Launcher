@@ -117,6 +117,7 @@ internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
                 editMode = editMode,
                 fillScreenHeight = fillHeight == true,
             )
+            ProactiveSuggestionsPanel(modifier = Modifier.fillMaxWidth())
             WidgetColumn(
                 modifier = Modifier
                     .padding(top = 16.dp),

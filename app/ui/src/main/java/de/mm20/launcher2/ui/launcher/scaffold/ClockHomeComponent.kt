@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.launcher.scaffold
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -22,11 +24,15 @@ internal object ClockHomeComponent : ScaffoldComponent() {
         insets: PaddingValues,
         state: LauncherScaffoldState,
     ) {
-        ClockWidget(
-            modifier = modifier
-                .padding(insets)
-                .pointerInput(Unit) {},
-            fillScreenHeight = true,
-        )
+        Column(modifier = modifier.padding(insets)) {
+            ClockWidget(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .pointerInput(Unit) {},
+                fillScreenHeight = true,
+            )
+            ProactiveSuggestionsPanel(modifier = Modifier.fillMaxWidth())
+        }
     }
 }
