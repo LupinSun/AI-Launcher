@@ -17,6 +17,7 @@ import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.preferences.ai.AiSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
@@ -72,6 +73,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
+    private val aiSettings: AiSettings by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -142,6 +144,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val filters = mutableStateOf(defaultFilters.value)
     val filterBar = searchFilterSettings.filterBar
     val filterBarItems = searchFilterSettings.filterBarItems
+
+    val assistantEnabled = aiSettings.assistantEnabled
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 

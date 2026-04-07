@@ -2,6 +2,11 @@ package de.mm20.launcher2.ui.launcher.searchbar
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
@@ -35,7 +40,10 @@ fun ColumnScope.SearchBarActions(
     reverse: Boolean = false,
 ) {
     val context = LocalContext.current
-    AnimatedVisibility(actions.isNotEmpty()) {
+    val searchVM: SearchVM = viewModel()
+    val assistantEnabled by searchVM.assistantEnabled.collectAsState(false)
+    val sheetManager = LocalBottomSheetManager.current
+    AnimatedVisibility(actions.isNotEmpty() || assistantEnabled) {
         LazyRow(
             modifier = Modifier
                 .consumeAllScrolling()
@@ -73,6 +81,22 @@ fun ColumnScope.SearchBarActions(
                     }
                 )
             }
+            if (assistantEnabled) {
+                item {
+                    SmallFloatingActionButton(
+                        modifier = Modifier.padding(start = 4.dp),
+                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        onClick = { sheetManager.showAssistantSheet() },
+                    ) {
+                        Icon(
+                            painter = painterResource(de.mm20.launcher2.base.R.drawable.auto_awesome_24dp),
+                            contentDescription = "Open AI Assistant",
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        )
+                    }
+                }
+            }
             item {
                 SmallFloatingActionButton(
                     modifier = Modifier.padding(start = 4.dp),
@@ -85,7 +109,6 @@ fun ColumnScope.SearchBarActions(
                         )
                     }
                 ) {
-
                     Icon(painterResource(R.drawable.edit_24px), contentDescription = null)
                 }
             }

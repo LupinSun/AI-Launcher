@@ -19,6 +19,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     val hiddenItemsSheetShown = mutableStateOf(false)
     val editTagSheetShown = mutableStateOf<String?>(null)
     val failedGestureSheetShown = mutableStateOf<FailedGesture?>(null)
+    val assistantSheetShown = mutableStateOf(false)
 
     init {
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
@@ -81,6 +82,14 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     }
     fun dismissFailedGestureSheet() {
         failedGestureSheetShown.value = null
+    }
+
+    fun showAssistantSheet() {
+        assistantSheetShown.value = true
+    }
+
+    fun dismissAssistantSheet() {
+        assistantSheetShown.value = false
     }
 
     companion object {
