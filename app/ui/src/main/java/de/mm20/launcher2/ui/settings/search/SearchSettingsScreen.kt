@@ -46,6 +46,7 @@ import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsRoute
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
+import de.mm20.launcher2.ui.settings.ai.AiSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -305,6 +306,13 @@ fun SearchSettingsScreen() {
                     icon = R.drawable.arrow_outward_24px,
                     onClick = {
                         backStack.add(SearchActionsSettingsRoute)
+                    }
+                )
+                Preference(
+                    title = "AI Features",
+                    summary = "Configure AI provider, API key, and AI features",
+                    onClick = {
+                        backStack.add(AiSettingsRoute)
                     }
                 )
             }

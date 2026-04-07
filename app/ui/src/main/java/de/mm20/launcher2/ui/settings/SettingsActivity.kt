@@ -150,6 +150,8 @@ import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsRoute
 import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
+import de.mm20.launcher2.ui.settings.ai.AiSettingsRoute
+import de.mm20.launcher2.ui.settings.ai.AiSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 
@@ -222,6 +224,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<WikipediaSettingsRoute> {
                 WikipediaSettingsScreen()
+            }
+            entry<AiSettingsRoute> {
+                AiSettingsScreen()
             }
             entry<LocationsSettingsRoute> {
                 LocationsSettingsScreen()
