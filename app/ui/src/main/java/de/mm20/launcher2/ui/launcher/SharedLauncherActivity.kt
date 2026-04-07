@@ -50,6 +50,7 @@ import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.scaffold.ClockAndWidgetsHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.ClockHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.DismissComponent
+import de.mm20.launcher2.ui.launcher.scaffold.AssistantComponent
 import de.mm20.launcher2.ui.launcher.scaffold.FeedComponent
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.LaunchComponent
@@ -326,6 +327,11 @@ abstract class SharedLauncherActivity(
 
                                             is GestureAction.Feed -> ScaffoldGesture(
                                                 component = FeedComponent,
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.Assistant -> ScaffoldGesture(
+                                                component = AssistantComponent,
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 

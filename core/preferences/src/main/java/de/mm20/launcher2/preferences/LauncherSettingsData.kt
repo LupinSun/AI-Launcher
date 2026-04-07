@@ -414,6 +414,10 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("feed")
     data object Feed : GestureAction
+
+    @Serializable
+    @SerialName("assistant")
+    data object Assistant : GestureAction
 }
 
 

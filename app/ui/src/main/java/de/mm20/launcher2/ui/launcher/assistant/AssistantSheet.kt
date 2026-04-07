@@ -50,84 +50,101 @@ fun AssistantSheet(
     onDismiss: () -> Unit,
 ) {
     DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
-        val viewModel: AssistantSheetVM = viewModel()
-        val messages by viewModel.messages.collectAsState()
-        val state by viewModel.state.collectAsState()
-
-        val listState = rememberLazyListState()
-        LaunchedEffect(messages.size) {
-            if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
-        }
-
-        Column(
+        AssistantContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .navigationBarsPadding()
-                .imePadding()
+                .imePadding(),
+            maxChatHeight = 400.dp,
+        )
+    }
+}
+
+@Composable
+fun AssistantContent(
+    modifier: Modifier = Modifier,
+    maxChatHeight: androidx.compose.ui.unit.Dp = androidx.compose.ui.unit.Dp.Unspecified,
+) {
+    val viewModel: AssistantSheetVM = viewModel()
+    val messages by viewModel.messages.collectAsState()
+    val state by viewModel.state.collectAsState()
+
+    val listState = rememberLazyListState()
+    LaunchedEffect(messages.size) {
+        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
+    }
+
+    Column(modifier = modifier) {
+        // Header
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
-            // Header
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
-                Icon(
-                    painter = painterResource(de.mm20.launcher2.base.R.drawable.auto_awesome_24dp),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp),
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "AI Assistant",
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-
-            // Chat messages
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .weight(1f, fill = false)
-                    .fillMaxWidth()
-                    .height(400.dp)
-                    .padding(horizontal = 8.dp),
-            ) {
-                items(messages) { message ->
-                    ChatBubble(message = message)
-                }
-                if (state is AssistantState.Streaming) {
-                    item {
-                        StreamingBubble(text = (state as AssistantState.Streaming).partialText)
-                    }
-                }
-                if (state is AssistantState.Thinking) {
-                    item {
-                        Box(modifier = Modifier.padding(8.dp)) {
-                            CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                        }
-                    }
-                }
-                if (state is AssistantState.Error) {
-                    item {
-                        Text(
-                            text = "Error: ${(state as AssistantState.Error).message}",
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(8.dp),
-                        )
-                    }
-                }
-            }
-
-            // Input bar
-            AssistantInputBar(
-                enabled = state is AssistantState.Idle || state is AssistantState.Error,
-                onSend = { text -> viewModel.sendMessage(text) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            Icon(
+                painter = painterResource(de.mm20.launcher2.base.R.drawable.auto_awesome_24dp),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp),
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "AI Assistant",
+                style = MaterialTheme.typography.titleMedium,
             )
         }
+
+        // Chat messages
+        val chatModifier = if (maxChatHeight != androidx.compose.ui.unit.Dp.Unspecified) {
+            Modifier
+                .weight(1f, fill = false)
+                .fillMaxWidth()
+                .height(maxChatHeight)
+                .padding(horizontal = 8.dp)
+        } else {
+            Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        }
+        LazyColumn(
+            state = listState,
+            modifier = chatModifier,
+        ) {
+            items(messages) { message ->
+                ChatBubble(message = message)
+            }
+            if (state is AssistantState.Streaming) {
+                item {
+                    StreamingBubble(text = (state as AssistantState.Streaming).partialText)
+                }
+            }
+            if (state is AssistantState.Thinking) {
+                item {
+                    Box(modifier = Modifier.padding(8.dp)) {
+                        CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                    }
+                }
+            }
+            if (state is AssistantState.Error) {
+                item {
+                    Text(
+                        text = "Error: ${(state as AssistantState.Error).message}",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(8.dp),
+                    )
+                }
+            }
+        }
+
+        // Input bar
+        AssistantInputBar(
+            enabled = state is AssistantState.Idle || state is AssistantState.Error,
+            onSend = { text -> viewModel.sendMessage(text) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
     }
 }
 
