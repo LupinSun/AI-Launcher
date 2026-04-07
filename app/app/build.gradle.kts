@@ -153,6 +153,7 @@ dependencies {
     implementation(project(":data:wikipedia"))
     implementation(project(":services:ai"))
     implementation(project(":data:ai-search"))
+    implementation(project(":services:ai-assistant"))
     implementation(project(":data:database"))
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))

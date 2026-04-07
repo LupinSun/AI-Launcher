@@ -25,6 +25,7 @@ import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.ai.aiModule
 import de.mm20.launcher2.aisearch.aiSearchModule
+import de.mm20.launcher2.aiassistant.aiAssistantModule
 import de.mm20.launcher2.database.databaseModule
 import de.mm20.launcher2.debug.initDebugMode
 import de.mm20.launcher2.globalactions.globalActionsModule
@@ -94,6 +95,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     wikipediaModule,
                     aiModule,
                     aiSearchModule,
+                    aiAssistantModule,
                     locationsModule,
                     servicesTagsModule,
                     widgetsServiceModule,
