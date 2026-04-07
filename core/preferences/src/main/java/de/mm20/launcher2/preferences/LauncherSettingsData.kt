@@ -216,8 +216,14 @@ data class LauncherSettingsData internal constructor(
      */
     val localeSecondaryCalendar: String? = null,
 
-    val feedProviderPackage: String? = null
+    val feedProviderPackage: String? = null,
 
+    val aiActiveProvider: AiProviderType = AiProviderType.None,
+    val aiActiveModel: String = "",
+    val aiSearchEnabled: Boolean = false,
+    val assistantEnabled: Boolean = false,
+    val proactiveSuggestionsEnabled: Boolean = false,
+    val proactiveSuggestionsIntervalMinutes: Int = 30,
 
     ) {
     constructor(
