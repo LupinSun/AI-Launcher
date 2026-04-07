@@ -26,7 +26,7 @@ android {
 
     compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
-        applicationId = "de.mm20.launcher2"
+        applicationId = "de.mm20.launcher2.ai"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026012400

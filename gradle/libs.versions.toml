@@ -45,6 +45,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 
 osmOpeningHours = "0.4.0"
+mlkitLanguageId = "17.0.4"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -131,6 +132,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
 
 smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version = "1.1.2" }
+mlkit-language-id = { group = "com.google.mlkit", name = "language-id", version.ref = "mlkitLanguageId" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]

@@ -296,3 +296,5 @@ fabric.properties
 .idea/studiobot.xml
 
 .kotlin.worktrees/
+
+ai_keys.properties
