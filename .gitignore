@@ -295,4 +295,4 @@ fabric.properties
 .idea/other.xml
 .idea/studiobot.xml
 
-.kotlin
+.kotlin.worktrees/
